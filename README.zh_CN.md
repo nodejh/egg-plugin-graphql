@@ -20,28 +20,18 @@
 [download-image]: https://img.shields.io/npm/dm/egg-plugin-graphql.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-plugin-graphql
 
-<!--
-Description here.
--->
 
-## 依赖说明
+Egg GraphQL 插件。
 
-### 依赖的 egg 版本
+[English](README.md) | [中文](README.zh_CN.md)
 
-egg-plugin-graphql 版本 | egg 1.x
---- | ---
-1.x | 😁
-0.x | ❌
 
-### 依赖的插件
-<!--
+## 安装
 
-如果有依赖其它插件，请在这里特别说明。如
+```bash
+$ npm i egg-plugin-graphql --save
+```
 
-- security
-- multipart
-
--->
 
 ## 开启插件
 
@@ -53,19 +43,35 @@ exports.graphql = {
 };
 ```
 
-## 使用场景
+## 特性
 
-- Why and What: 描述为什么会有这个插件，它主要在完成一件什么事情。
-尽可能描述详细。
-- How: 描述这个插件是怎样使用的，具体的示例代码，甚至提供一个完整的示例，并给出链接。
+- 简单易用
+- 支持模块化 GraphQL Schema
+- 内置 Apollo Playground
 
 ## 详细配置
 
+```js
+exports.graphql = {
+  router: '/graphql',
+  // 是否加载到 app 上, 默认开启
+  app: true,
+  // 是否加载到 agent 上, 默认关闭
+  agent: false,
+  // 是否加载开发者工具 (playground), 默认开启, 路由同 router 字段, 使用浏览器打开该可见
+  playground: true,
+};
+```
+
 请到 [config/config.default.js](config/config.default.js) 查看详细配置项说明。
 
-## 单元测试
+## Example
 
-<!-- 描述如何在单元测试中使用此插件，例如 schedule 如何触发。无则省略。-->
+- [ ] TODO
+
+## TODO
+
+- [ ] 支持 connector
 
 ## 提问交流
 

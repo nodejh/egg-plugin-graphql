@@ -1,6 +1,6 @@
 {
   "name": "egg-plugin-graphql",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "egg plugin graphql",
   "eggPlugin": {
     "name": "graphql"
@@ -50,12 +50,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-plugin-graphql.git"
+    "url": "git+https://github.com/nodejh/egg-plugin-graphql.git"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/nodejh/egg-plugin-graphql/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-plugin-graphql#readme",
+  "homepage": "https://github.com/nodejh/egg-plugin-graphql",
   "author": "nodejh",
   "license": "MIT"
 }

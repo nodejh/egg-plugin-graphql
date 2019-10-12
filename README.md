@@ -20,9 +20,9 @@
 [download-image]: https://img.shields.io/npm/dm/egg-plugin-graphql.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-plugin-graphql
 
-<!--
-Description here.
--->
+Egg Plugin for GraphQL.
+
+[English](README.md) | [中文](README.zh_CN.md)
 
 ## Install
 
@@ -45,14 +45,28 @@ exports.graphql = {
 ```js
 // {app_root}/config/config.default.js
 exports.graphql = {
+  router: '/graphql',
+  // load on app, default true
+  app: true,
+  // load on agent, default false
+  agent: false,
+  // use playground, default true
+  playground: true,
 };
+
+// add graphql middleware
+exports.middleware = [ 'graphql' ];
 ```
 
 see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Example
 
-<!-- example here -->
+- [ ] TODO
+
+## TODO
+
+- [ ] support connector
 
 ## Questions & Suggestions
 

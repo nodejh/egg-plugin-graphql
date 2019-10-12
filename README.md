@@ -34,7 +34,7 @@ $ npm i egg-plugin-graphql --save
 
 ```js
 // {app_root}/config/plugin.js
-exports.eggPluginGraphql = {
+exports.graphql = {
   enable: true,
   package: 'egg-plugin-graphql',
 };
@@ -44,7 +44,7 @@ exports.eggPluginGraphql = {
 
 ```js
 // {app_root}/config/config.default.js
-exports.eggPluginGraphql = {
+exports.graphql = {
 };
 ```
 

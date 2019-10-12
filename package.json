@@ -1,9 +1,9 @@
 {
   "name": "egg-plugin-graphql",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "description": "egg plugin graphql",
   "eggPlugin": {
-    "name": "eggPluginGraphql"
+    "name": "graphql"
   },
   "keywords": [
     "egg",
@@ -42,7 +42,8 @@
     "app.js",
     "agent.js",
     "config",
-    "app"
+    "app",
+    "lib"
   ],
   "ci": {
     "version": "8, 10"

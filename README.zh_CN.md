@@ -47,7 +47,7 @@ egg-plugin-graphql 版本 | egg 1.x
 
 ```js
 // config/plugin.js
-exports.eggPluginGraphql = {
+exports.graphql = {
   enable: true,
   package: 'egg-plugin-graphql',
 };

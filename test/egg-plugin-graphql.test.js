@@ -17,7 +17,12 @@ describe('test/egg-plugin-graphql.test.js', () => {
   it('should GET /', () => {
     return app.httpRequest()
       .get('/')
-      .expect('hi, eggPluginGraphql')
+      .expect('hi, graphql')
       .expect(200);
+  });
+
+  it('should GET /graphql', async () => {
+    const res = await app.httpRequest().get('/graphql');
+    console.log('res', res.body);
   });
 });

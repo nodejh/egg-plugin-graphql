@@ -20,45 +20,55 @@
 [download-image]: https://img.shields.io/npm/dm/egg-plugin-graphql.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-plugin-graphql
 
-Egg Plugin for GraphQL.
 
-[English](README.md) | [中文](README.zh_CN.md)
+Egg GraphQL 插件。
 
-## Install
+
+## 安装
 
 ```bash
 $ npm i egg-plugin-graphql --save
 ```
 
-## Usage
+
+## 开启插件
 
 ```js
-// {app_root}/config/plugin.js
+// config/plugin.js
 exports.graphql = {
   enable: true,
   package: 'egg-plugin-graphql',
 };
 ```
 
-## Configuration
+## 特性
+
+- 简单易用
+- 支持模块化 GraphQL Schema
+- 内置 Apollo Playground
+
+## 详细配置
 
 ```js
-// {app_root}/config/config.default.js
 exports.graphql = {
   router: '/graphql',
-  // load on app, default true
+  // 是否加载到 app 上, 默认开启
   app: true,
-  // load on agent, default false
+  // 是否加载到 agent 上, 默认关闭
   agent: false,
-  // use playground, default true
+  // 是否加载开发者工具 (playground), 默认开启, 路由同 router 字段, 使用浏览器打开该可见
   playground: true,
 };
-
-// add graphql middleware
-exports.middleware = [ 'graphql' ];
 ```
 
-see [config/config.default.js](config/config.default.js) for more detail.
+请到 [config/config.default.js](config/config.default.js) 查看详细配置项说明。
+
+
+## app/graphql
+
+- schema: schema.graphql / [name].graphql
+- resolver: [name].resolver.js / resolver.js (以 `resolver.js` 结尾 )
+- connector: [name].connector.js / connector.js (以 `connector.js` 结尾 )
 
 ## Example
 
@@ -66,11 +76,11 @@ see [config/config.default.js](config/config.default.js) for more detail.
 
 ## TODO
 
-- [ ] support connector
+- [ ] 支持 connector
 
-## Questions & Suggestions
+## 提问交流
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+请到 [egg issues](https://github.com/eggjs/egg/issues) 异步交流。
 
 ## License
 

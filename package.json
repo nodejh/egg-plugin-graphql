@@ -1,6 +1,6 @@
 {
   "name": "egg-plugin-graphql",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "description": "egg plugin graphql",
   "eggPlugin": {
     "name": "graphql"
@@ -8,7 +8,8 @@
   "keywords": [
     "egg",
     "eggPlugin",
-    "egg-plugin"
+    "egg-plugin",
+    "apollo-server-egg"
   ],
   "dependencies": {
     "apollo-server-koa": "^2.9.6",

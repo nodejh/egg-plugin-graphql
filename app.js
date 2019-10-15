@@ -2,13 +2,14 @@
 
 const loadGraphql = require('./lib/load_graphql');
 
-
 class AppBootHook {
   constructor(app) {
     this.app = app;
   }
 
-  // configWillLoad() {}
+  configWillLoad() {
+    this.app.config.coreMiddleware.push('graphql');
+  }
 
   async didLoad() {
     try {

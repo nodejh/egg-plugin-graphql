@@ -1,6 +1,14 @@
+enum Gender {
+  MALE
+  FEMALE
+}
+
+type User {
+  name: String!
+  gender: Gender!
+}
+
 extend type Query {
-  "get user name"
-  user: String
-  "hello to user"
-  hello: String
+  user(name: String!): User!
+  users: [User!]
 }

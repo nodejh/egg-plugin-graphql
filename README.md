@@ -80,7 +80,7 @@ exports.graphql = {
 
 ## 提问交流
 
-请到 [egg issues](https://github.com/eggjs/egg/issues) 异步交流。
+请到 [issues](https://github.com/nodejh/egg-plugin-graphql/issues) 异步交流。
 
 ## License
 

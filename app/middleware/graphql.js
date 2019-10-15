@@ -10,13 +10,13 @@ module.exports = (options, app) => {
       const server = new ApolloServer({
         typeDefs,
         resolvers,
+        context: ctx,
         playground: options.playground,
       });
 
       server.applyMiddleware({
         app,
         path: options.router,
-        context: ctx,
       });
     }
 

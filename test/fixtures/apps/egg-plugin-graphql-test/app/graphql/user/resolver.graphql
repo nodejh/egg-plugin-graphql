@@ -1,6 +1,0 @@
-extend type Query {
-  "get user name"
-  user: String
-  "hello to user"
-  hello: String
-}

@@ -4,11 +4,12 @@ enum Gender {
 }
 
 type User {
+  id: ID!
   name: String!
   gender: Gender!
 }
 
 extend type Query {
-  user(name: String!): User!
-  users: [User!]
+  user(name: String!): User
+  users: [User]
 }

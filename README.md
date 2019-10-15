@@ -23,6 +23,11 @@
 
 Egg GraphQL 插件。
 
+- 简单易用
+- 支持模块化 GraphQL Schema
+- 内置 Apollo Playground
+- 支持子 Schema
+
 
 ## 安装
 
@@ -41,21 +46,14 @@ exports.graphql = {
 };
 ```
 
-## 特性
-
-- 简单易用
-- 支持模块化 GraphQL Schema
-- 内置 Apollo Playground
 
 ## 详细配置
 
 ```js
 exports.graphql = {
   router: '/graphql',
-  // 是否加载到 app 上, 默认开启
-  app: true,
-  // 是否加载到 agent 上, 默认关闭
-  agent: false,
+  // 是否创建默认的空 schema
+  defaultEmptySchema: false,
   // 是否加载开发者工具 (playground), 默认开启, 路由同 router 字段, 使用浏览器打开该可见
   playground: true,
 };
@@ -64,19 +62,10 @@ exports.graphql = {
 请到 [config/config.default.js](config/config.default.js) 查看详细配置项说明。
 
 
-## app/graphql
-
-- schema: schema.graphql / [name].graphql
-- resolver: [name].resolver.js / resolver.js (以 `resolver.js` 结尾 )
-- connector: [name].connector.js / connector.js (以 `connector.js` 结尾 )
 
 ## Example
 
 - [ ] TODO
-
-## TODO
-
-- [ ] 支持 connector
 
 ## 提问交流
 

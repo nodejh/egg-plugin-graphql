@@ -1,12 +1,16 @@
 'use strict';
 
+const data = require('../../mock/data');
+
+
 module.exports = {
   Query: {
-    user: (root, params, ctx) => {
-      console.log(root);
-      console.log(params);
-      console.log(ctx);
+    user: (parent, args) => {
+      const { name } = args;
+      return data.user.find(o => o.name === name);
     },
-    users: () => [ 'Jack', 'tom' ],
+    users: () => {
+      return data.user;
+    },
   },
 };

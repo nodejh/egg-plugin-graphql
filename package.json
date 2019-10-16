@@ -1,6 +1,6 @@
 {
   "name": "egg-plugin-graphql",
-  "version": "0.1.8",
+  "version": "0.1.11",
   "description": "egg plugin graphql",
   "eggPlugin": {
     "name": "graphql"
@@ -12,10 +12,12 @@
     "apollo-server-egg"
   ],
   "dependencies": {
+    "@apollographql/graphql-playground-html": "^1.6.24",
     "apollo-server-koa": "^2.9.6",
     "debug": "^4.1.1",
     "glob": "^7.1.4",
     "graphql": "^14.5.8",
+    "graphql-tools": "^4.0.5",
     "lodash": "^4.17.15",
     "merge-graphql-schemas": "^1.7.0"
   },

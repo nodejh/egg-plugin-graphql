@@ -1,14 +1,10 @@
 'use strict';
 
-const loadGraphql = require('./lib/load_graphql');
+const loadGraphql = require('./lib/load_schema');
 
 class AppBootHook {
   constructor(app) {
     this.app = app;
-  }
-
-  configWillLoad() {
-    this.app.config.coreMiddleware.push('graphql');
   }
 
   async didLoad() {
@@ -19,12 +15,6 @@ class AppBootHook {
       throw error;
     }
   }
-
-  // async willReady() {}
-
-  // async didReady() {}
-
-  // async serverDidReady() {}
 }
 
 module.exports = AppBootHook;

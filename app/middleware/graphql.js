@@ -21,6 +21,9 @@ module.exports = (options, app) => {
         ctx.set('Content-Type', 'text/html');
         const playground = renderPlaygroundPage({
           endpoint: options.router,
+          settings: {
+            'request.credentials': 'include',
+          },
         });
         ctx.body = playground;
         return;

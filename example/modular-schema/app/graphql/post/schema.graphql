@@ -1,0 +1,11 @@
+type Post {
+  id: Int!
+  title: String!
+  content: String!
+  user: User!
+}
+
+extend type Query {
+  post(id: Int!): Post
+  posts(userIds: [Int!]): [Post!]
+}

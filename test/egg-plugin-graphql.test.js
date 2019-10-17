@@ -22,7 +22,6 @@ describe('test/egg-plugin-graphql.test.js', () => {
   });
 
   it('should GET /graphql', async () => {
-    const res = await app.httpRequest().get('/graphql');
-    console.log('res', res.body);
+    // const res = await app.httpRequest().get('/graphql');
   });
 });

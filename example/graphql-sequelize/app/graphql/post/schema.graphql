@@ -1,0 +1,22 @@
+type Post {
+  id: Int!
+  title: String!
+  content: String!
+  createAt: Date!
+  user: User!
+}
+
+input PostInput {
+  title: String!
+  content: String!
+  userId: Int!
+}
+
+extend type Query {
+  post(id: Int!): Post
+  posts(userIds: [Int!]): [Post!]
+}
+
+extend type Mutation  {
+  post(post: PostInput!): Int!
+}

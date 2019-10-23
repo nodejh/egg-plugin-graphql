@@ -5,13 +5,13 @@ const data = require('../mock/data');
 
 
 class UserService extends Service {
-  findById(id) {
-    const user = data.user.find(o => o.id === id);
+  async findById(id) {
+    const user = await data.user.find(o => o.id === id);
     return user;
   }
 
-  findAll() {
-    const users = data.user;
+  async findAll() {
+    const users = await data.user;
     return users;
   }
 }

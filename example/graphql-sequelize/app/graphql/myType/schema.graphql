@@ -1,0 +1,11 @@
+directive @upper on FIELD_DEFINITION
+
+type MyType {
+  oddValue: Odd
+  oldValue: String! @deprecated(reason: "use new filed")
+}
+
+extend type Query {
+  myType(value: Int!): MyType
+  hello(name: String!): String! @upper
+}

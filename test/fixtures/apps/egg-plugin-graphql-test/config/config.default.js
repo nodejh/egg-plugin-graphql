@@ -7,3 +7,6 @@ exports.graphql = {
   defaultEmptySchema: true,
   playground: true,
 };
+
+
+exports.middleware = [ 'graphql' ];

@@ -1,6 +1,6 @@
 {
   "name": "egg-plugin-graphql",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "egg plugin graphql",
   "eggPlugin": {
     "name": "graphql"
@@ -45,10 +45,9 @@
     "autod": "autod"
   },
   "files": [
-    "app.js",
-    "agent.js",
-    "config",
     "app",
+    "config",
+    "app.js",
     "lib"
   ],
   "ci": {

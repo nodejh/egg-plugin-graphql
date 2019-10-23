@@ -5,6 +5,7 @@ const {
   renderPlaygroundPage,
 } = require('@apollographql/graphql-playground-html');
 
+
 module.exports = (options, app) => {
   return async (ctx, next) => {
     if (ctx.request.path === options.router && app.schema) {

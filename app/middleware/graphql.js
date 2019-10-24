@@ -1,41 +1,28 @@
 'use strict';
 
-const { graphqlKoa } = require('apollo-server-koa/dist/koaApollo');
-const {
-  renderPlaygroundPage,
-} = require('@apollographql/graphql-playground-html');
-
+const { ApolloServer } = require('apollo-server-koa');
+const compose = require('koa-compose');
 
 module.exports = (options, app) => {
-  return async (ctx, next) => {
-    if (ctx.request.path === options.router && app.schema) {
-      if (ctx.request.method === 'OPTIONS') {
-        ctx.status = 204;
-        ctx.body = '';
-        return;
-      }
-
-      if (
-        ctx.request.accepts([ 'json', 'html' ]) === 'html' &&
-        options.playground
-      ) {
-        ctx.set('Content-Type', 'text/html');
-        const playground = renderPlaygroundPage({
-          endpoint: options.router,
-          settings: {
-            'request.credentials': 'include',
-          },
-        });
-        ctx.body = playground;
-        return;
-      }
-
-      return graphqlKoa({
-        schema: app.schema,
-        context: ctx,
-      })(ctx, next);
-    }
-
-    await next();
-  };
+  const { typeDefs, resolvers, schemaDirectives } = app.graphql;
+  const middleware = [];
+  const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers,
+    schemaDirectives,
+    context: ({ ctx }) => {
+      return ctx;
+    },
+    playground: options.playground,
+  });
+  apolloServer.applyMiddleware({
+    app: {
+      // collecting middleware
+      use: m => {
+        middleware.push(m);
+      },
+    },
+    path: options.router,
+  });
+  return compose(middleware);
 };

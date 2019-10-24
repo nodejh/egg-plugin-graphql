@@ -23,11 +23,6 @@
 
 Egg GraphQL 插件。
 
-- 简单易用
-- 支持模块化 GraphQL Schema
-- 内置 Apollo Playground
-- 支持子 Schema
-
 
 ## 使用方法
 

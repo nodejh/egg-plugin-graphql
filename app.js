@@ -1,19 +1,15 @@
 'use strict';
 
-const loadGraphql = require('./lib/load_schema');
+const loader = require('./lib/loader');
+
 
 class AppBootHook {
   constructor(app) {
     this.app = app;
   }
 
-  async didLoad() {
-    try {
-      await loadGraphql(this.app);
-    } catch (error) {
-      this.app.coreLogger.error('Load graphql plugin error');
-      throw error;
-    }
+  configDidLoad() {
+    loader(this.app);
   }
 }
 

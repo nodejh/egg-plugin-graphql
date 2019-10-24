@@ -9,12 +9,12 @@
 
 [npm-image]: https://img.shields.io/npm/v/egg-plugin-graphql.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-plugin-graphql
-[travis-image]: https://img.shields.io/travis/eggjs/egg-plugin-graphql.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-plugin-graphql
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-plugin-graphql.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-plugin-graphql?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-plugin-graphql.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-plugin-graphql
+[travis-image]: https://img.shields.io/travis/nodejh/egg-plugin-graphql.svg?style=flat-square
+[travis-url]: https://travis-ci.org/nodejh/egg-plugin-graphql
+[codecov-image]: https://img.shields.io/codecov/c/github/nodejh/egg-plugin-graphql.svg?style=flat-square
+[codecov-url]: https://codecov.io/github/nodejh/egg-plugin-graphql?branch=master
+[david-image]: https://img.shields.io/david/nodejh/egg-plugin-graphql.svg?style=flat-square
+[david-url]: https://david-dm.org/nodejh/egg-plugin-graphql
 [snyk-image]: https://snyk.io/test/npm/egg-plugin-graphql/badge.svg?style=flat-square
 [snyk-url]: https://snyk.io/test/npm/egg-plugin-graphql
 [download-image]: https://img.shields.io/npm/dm/egg-plugin-graphql.svg?style=flat-square

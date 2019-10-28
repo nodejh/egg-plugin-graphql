@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "egg": "^2.15.1",
-    "egg-plugin-graphql": "^0.1.13",
+    "egg-plugin-graphql": "^0.1.16",
     "egg-scripts": "^2.11.0"
   },
   "devDependencies": {

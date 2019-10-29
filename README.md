@@ -108,7 +108,7 @@ GraphQL 是一个 API 查询语言，跟 RESTful API 是同一类的技术。换
 - `service`
 - `public` （view）
 
-我们一般会在 `router`  中定义接口，也就是 RESTful API 中的路由，如 `router.get('/api/user', controller.user.index)`，然后在 `controller` 控制器的逻辑，一般是参数校验、权限控制、调用 `service` 以及返回结果。`service` 中则是业务的具体实现，比如操作数据库等。
+我们一般会在 `router`  中定义接口，也就是 RESTful API 中的路由，如 `router.get('/api/user', controller.user.index)`，然后在 `controller` 实现控制器的逻辑，一般是参数校验、权限控制、调用 `service` 以及返回结果。`service` 中则是业务的具体实现，比如操作数据库等。
 
 而当我们在 Egg.js 中使用 GraphQL 的时候，替代的则是 `controller`。因为 GraphQL 已经帮我们实现了路由和参数校验，并且我们可以在 GraphQL 中进行服务（`service`）的调用。
 
@@ -184,6 +184,20 @@ const resolvers = {
 };
 ```
 
+resolver 函数也支持 promise，如：
+
+```js
+const resolvers = {
+  Query: {
+    users: async (parent, info, context) => {
+      return await context.service.user.findAll();
+    }
+  },
+};
+```
+
+### 开发者工具（playground）
+
 为了更直观看到效果，我们可以通过 [apollo-server](https://github.com/apollographql/apollo-server) 将前面写的 schema 和 resolvers 都启动起来：
 
 ```js
@@ -215,11 +229,11 @@ const typeDefs = gql`
 // A map of functions which return data for the schema.
 const resolvers = {
   Query: {
-    users: () => [{ name: "Jack", gender: "MALE", tags: ["Alibaba"] }],
+    users: () => [{ name: "Jack", gender: "MALE", tags: ["Alibaba"] }, { name: 'Joe', gender: 'MALE', tags: [] }],
     user: (parent, args, context, info) => {
       const { name } = args;
       // find user by name...
-      return { name, gender: "MALE", tags: ["Alibaba"] }
+      return { name, gender: "MALE", tags: [name] }
     },
   },
 };
@@ -234,20 +248,209 @@ server.listen().then(({ url }) => {
 });
 ```
 
-通过 `node index.js` 启动之后在浏览器中打开对应的 URL，就可以看到一个强大的 GraphQL 开发者工具（playground），我们可以在这里写查询语句查询 GraphQL 接口。
+通过 `node index.js` 启动之后在浏览器中打开对应的 URL（默认是 http://localhost:4000），就可以看到一个强大的 GraphQL 开发者工具（playground），我们可以在左侧查询语句查询，执行后右侧就会显示对应的数据。
 
-### GraphQL 查询
+![egg-graphql-plugin.gif](https://nodejh.oss-cn-beijing.aliyuncs.com/nodejs-graphql/egg-graphql-plugin.gif)
 
+### 查询 query
+
+
+#### 请求你所要的数据，不多不少
+
+在 RESTful API 中，我们一般是通过接口查询数据，如查询所有用户列表可能是通过 HTTP GET 方法请求 `/api/users` 接口；而在 GraphQL 中，没有了路由的概念，取而代之的是**入口**，类似的，我们可以通过 GraphQL 的查询语句对 GraphQL Schema 中的入口进行查询。
+
+查询条件：
+
+```js
+query {
+  users {
+    name
+  }
+}
+```
+
+该查询的含义是，查询 `users`，并且返回 `name` 字段。查询结果如下：
+
+```json
+{
+  "data": {
+    "users": [
+      {
+        "name": "Jack"
+      },
+      {
+        "name": "Joe"
+      }
+    ]
+  }
+}
+```
+
+如果我们还需要得到 `gender` 和 `tags`，则可以这样写：
+
+```js
+query {
+  users {
+    name
+    gender
+    tags
+  }
+}
+```
+
+查询结果：
+
+```json
+{
+  "data": {
+    "users": [
+      {
+        "name": "Jack",
+        "gender": "MALE",
+        "tags": [
+          "Alibaba"
+        ]
+      },
+      {
+        "name": "Joe",
+        "gender": "MALE",
+        "tags": []
+      }
+    ]
+  }
+}
+```
+
+对比 RESTful API，GraphQL 的查询语句多了对返回字段描述。我们需要什么字段，则查询什么字段，这就解决了字段冗余的问题。同时 GraphQL 查询也总能得到可预测的结果，查询结果的字段一定是与查询条件一一对应的。
+
+当执行这条查询
+
+#### 获取多个资源，只用一个请求
+
+当然，GraphQL 的能力不止于此。
+
+设想另一个场景：查询所有用户名列表，并且返回用户名为 "Jack" 的详细信息。
+
+如果使用 RESTful API，我们可能需要发起两个 HTTP 请求分别查询 `/api/users` 和 `/api/user?name=Jack` 接口。但使用 GraphQL，我们只需要定义一个查询条件即可：
+
+```js
+query GetUser {
+  users {
+    name
+  }
+  user(name: "Jack") {
+    name
+    gender
+    tags
+  }
+}
+```
+
+在这个查询中，我们查询了两个入口：
+
+- 查询 `users`，返回 `name` 字段
+- 以 { "name": "Jack" } 为参数查询`user`，返回 `name`、`gender` 和 `tags` 字段
+
+通过浏览器开发者工具查看执行查询条件后的请求，可以发现只发送了一个请求，参数分别为 `operationName` `query` 和 `variables`。
+
+- `operationName` 是我们定义的操作名称，也就是 `GetUser`，可以省略
+- `query` 是查询条件
+- `variables` 是变量，上面的查询中暂时没有使用到变量，所以现在是空对象
+
+![nodejs-graphql-query.png](https://nodejh.oss-cn-beijing.aliyuncs.com/nodejs-graphql/nodejs-graphql-query.png)
+
+GraphQL 服务器接收到这个 HTTP 请求后，就会根据查询条件对 Schema 进行解析，也就是根据查询的字段，执行 Schema 中对应字段的 resolver 函数。
+
+这里需要注意的是，**查询（query）字段时，是并行执行，而变更（mutation）字段时，是线性执行，一个接着一个。**
+
+这也是 GraphQL 的强大之处，我们只需要写好 schema 以及 resolver，GraphQL 会自动根据查询语句帮我们实现服务的编排。这也解决了前后端协作中的另一个问题：前端需要聚合多个接口才能获取想要的数据。
+
+
+### 变更 mutation
+
+前面基本都在说数据的获取，但是任何完整的数据平台也都需要一个改变服务端数据的方法。
+
+在 RESTful API 中，任何请求都可能最后导致一些服务端副作用，但是约定上建议不要使用 GET 请求来修改数据。GraphQL 也是类似，技术上而言，任何查询都可以被实现为导致数据写入，但 GraphQL 建立了一个规范，任何修改数据的操作都应该使用 mutation 来发送。
+
+比如创建一个用户，首先 schema 应该使用 Mutation 来定义：
+
+```js
+input UserInput {
+  name: String!
+  gender: Gender!
+}
+
+type Mutation {
+  createUser(user: UserInput!): User!
+  createUserTag(tag: String!): User!
+}
+```
+
+`input` 表示输入对象，看上去和普通对象一摸一样，除了关键字是 input 而不是 type。它的特别之处在于，输入对象可以用在复杂的参数中，经常是 mutation 的参数，比如上面 `createUser` 的参数。
+
+定义了 Mutation 之后，同样需要定义对应的 resolver 函数：
+
+```js
+const resolvers = {
+  Query: {
+    // ...
+  },
+  Mutation: {
+    createUser: (parent, args, context, info) => {
+      const { user: { name, gender } } = args;
+      // insert user to db...
+      return { name, gender, tags: [] };
+    },
+    createUserTag: (parent, args, context, info) => {
+      const { tag } = args;
+      return { name: "Jack", gender: "MALE", tags: [ tag ] }
+    },
+  },
+};
+```
+
+于是我们就可以像下面这样来请求创建用户的 GraphQL 接口了：
+
+```js
+mutation CreateUser {
+  createUser(user: { "name": "Jack", "gender": "MALE" }) {
+    name
+    gender
+  }
+}
+```
+
+或者使用变量：
+
+```js
+mutation CreateUser($user: UserInput!) {
+  createUser(user: $user) {
+    name
+    gender
+  }
+}
+```
+
+在开发者工具中，可以在左下角的 QUERY VARIABLES 面板中添加变量：
+
+[nodejs-graphql-query.png](https://nodejh.oss-cn-beijing.aliyuncs.com/nodejs-graphql/nodejs-graphql-query.png)。
+
+
+关于查询和变更的更多内容，可以参考 GraphQL 的文档：[查询和变更](https://graphql.cn/learn/queries/)。
 
 ## 在 Egg.js 中使用 GraphQL
 
+前面对 GraphQL 做了一个简单的介绍，接下来就讲一下如何在 Egg.js 中使用 GraphQL。
+
+如果要在 express 中使用 GraphQL，推荐使用 [apollo-server](https://github.com/apollographql/apollo-server)。
+
 ### egg-plugin-graphql 简介
+
+`egg-plugin-graphql` 是一个基于 [apollo-server-koa](https://www.npmjs.com/package/apollo-server-koa) 封住的 Egg.js GraphQL 插件，目的是为了更好地在 Egg.js 中使用 GraphQL。
 
 ### 一个简单的例子
 
 ### 模块化的 Schema
-
-### Dataloader
 
 ### 自定义标量
 
@@ -257,5 +460,8 @@ server.listen().then(({ url }) => {
 
 ### 订阅
 
+### 权限校验
+
 ## 前端实现 GraphQL Client
 
+## 总结

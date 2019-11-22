@@ -7,7 +7,7 @@ GraphQL 实践系列文章包含以下几篇文章，将在近期更新：
 - GraphQL N + 1 问题
 - GraphQL 最佳实践
 
-- 本文代码：[https://github.com/nodejh/egg-plugin-graphql/examples/graphql-start](https://github.com/nodejh/egg-plugin-graphql/examples/graphql-start)
+- 本文代码：[https://github.com/nodejh/egg-plugin-graphql/tree/master/examples/graphql-start](https://github.com/nodejh/egg-plugin-graphql/tree/master/examples/graphql-start)
 
 
 ## 前言
